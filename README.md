@@ -10,7 +10,7 @@ Evidence-first AI governance experiment for Novara Phase 1.
 
 ## What is this repo?
 
-This repo will host the **specs and examples** for the first version of the **Novara Evidence OS**:
+This repo hosts the **specs and examples** for the first version of the **Novara Evidence OS**:
 
 - how to log AI behaviour in a tamper-evident way,
 - how to bundle logs + anchors + policies into one ZIP,
@@ -18,7 +18,7 @@ This repo will host the **specs and examples** for the first version of the **No
 
 Right now (2025-11-17) this is:
 
-- `v0.0.x` – **spec-first, code-later**
+- `v0.0.x` – **spec-first, code-later (but seed implementation already exists)**
 - written by a 19-year-old student in Taiwan
 - targeting **2040–2060 AI / ASI governance**, not just “next quarter”.
 
@@ -49,7 +49,7 @@ Novara’s answer is:
 
 ## Phase 1 scope (this repo)
 
-This repo will focus on two initial use-cases:
+This repo focuses on two initial use-cases:
 
 1. **Insurance / finance (Proof-to-Pay & rate cards)**  
    - AI-assisted decisions must come with a verifiable bundle  
@@ -59,7 +59,7 @@ This repo will focus on two initial use-cases:
    - anti-cheat / analytics / recommendation systems should also  
      be explainable and refutable with evidence bundles.
 
-Planned structure (will be added step by step):
+Planned structure (to be added step by step):
 
 - `docs/` – Novara Manifesto and high-level design
 - `specs/` – **Novara Evidence Bundle v0.9** draft
@@ -70,18 +70,19 @@ Planned structure (will be added step by step):
 ## Status
 
 - **Very early draft. Breaking changes guaranteed.**
-- No reference implementation yet – spec comes first.
+- Minimal Python reference implementation (seed `v0.0001`) exists locally:  
+  `novara-evidence-bundle-minimal` (to be published as a separate repo).
 - The long-term goal is to hand the format to a neutral  
   **Novara Foundation** so that no single vendor or country owns it.
 
 ---
 
-## Contributing
+## High-level design (v0.9 draft)
 
-For now, the most helpful feedback is about:
+The core idea is a **deterministic, tamper-evident 1-day bundle**:
 
-- missing fields for real-world audits (law / insurance / esports),
-- ways to simplify the bundle while keeping it verifiable,
-- alignment with upcoming regulations (EU AI Act, etc.).
-
-Issues and discussions are welcome.
+```text
+<subject>-<YYYY-MM-DD>.zip
+ ├─ meta.json        # human-readable metadata
+ ├─ aal.ndjson       # append-only log with hash-chain
+ └─ anchors.json     # SHA3-256 digest(s) for critical files
