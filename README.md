@@ -284,3 +284,47 @@ If you use this work in research or policy discussions, please cite e.g.:
 
 Novara is an experiment in evidence-first AI governance:
 logs before UX, proof before branding, verification before trust.
+
+## Novara Core – Key Principles (v0.1)
+
+1. **Evidence First**  
+   Logs before UX, proof before branding, verification before trust.
+
+2. **Evidence Sovereignty**  
+   “Ground truth” is whatever can be shown by open, tamper-evident evidence bundles, not by press releases or PR.
+
+3. **Zero-Trust Verification**  
+   Anyone should be able to verify what happened **without trusting the vendor, cloud, or hidden keys**.
+
+4. **Determinism**  
+   Same inputs → same outputs → same evidence bundle, byte-for-byte.  
+   If two runs produce different evidence, that difference itself must be explainable and logged.
+
+5. **Tamper-Evidence**  
+   Any change to logs, policies, models, or configs must be either:
+   - impossible, or
+   - visible as a cryptographic “scar” (hash chain break, anchor mismatch, etc.).
+
+6. **Attribution-Ready**  
+   Every decision can be traced to:
+   - actors (AI / operator / user),
+   - policy version,
+   - model/version,
+   - time window.
+
+7. **SLO-Bound Remedy**  
+   Once harm crosses a public threshold (e.g. ¥10,000),  
+   compensation is driven by pre-funded SLO-Bonds and an open attribution formula,  
+   not by ad-hoc negotiation.
+
+8. **Human-Readable Proof**  
+   Victims and the public receive a plain-language narrative (“what happened / who pays / what changed”),  
+   not just hashes and JSON.
+
+9. **Multi-Anchor Neutrality**  
+   Evidence anchors must be spread across multiple independent infrastructures and jurisdictions  
+   (different chains, different operators, different political blocs).
+
+10. **Civic Time Horizon**  
+    Novara Core is designed as public infrastructure for **2040–2060**,  
+    not as a feature of any single company, startup, or product cycle.
