@@ -420,3 +420,17 @@ Evidence anchors must be spread across multiple independent infrastructures and 
 	10.	Civic Time Horizon
 Novara Core is designed as public infrastructure for 2040–2060,
 not as a feature of any single company, startup, or product cycle.
+
+---
+
+## Related repositories
+
+This repository is one part of the broader Novara stack.
+
+- [`novara-core`](https://github.com/Novara-developer/novara-core)  
+  Text-only constitutional layer for Novara  
+  (governance principles, incident protocol, long-horizon roadmap).
+
+- [`novara-evidence-bundle-minimal`](https://github.com/Novara-developer/novara-evidence-bundle-minimal)  
+  Minimal implementation of the **Novara Evidence Bundle v0.1** format:  
+  spec, JSON Schema, Python SDK, verifier, and example bundles.
