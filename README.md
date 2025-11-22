@@ -1,4 +1,5 @@
 
+
 # Novara
 
 [![Test](https://github.com/Novara-developer/Novara/workflows/Test/badge.svg)](https://github.com/Novara-developer/Novara/actions)
@@ -18,6 +19,9 @@ Novara is an attempt to answer one simple question:
 
 This repository contains the first code and specs for that stack.
 
+Novara is **not** an alternative to LLM vendors.  
+It is the layer that will later audit, price, and sometimes overrule them.
+
 ---
 
 ## Relationship to `novara-core`
@@ -29,15 +33,12 @@ This repo is the **implementation side** of Novara:
 - CLI tools to generate and verify bundles
 - Specs, tests, and CI so that others can re-implement it
 
-The **constitutional documents** (governance, incident protocol, human-readable proof)
+The **constitutional documents** (governance, incident protocol, human-readable proof)  
 live separately in **[`novara-core`](https://github.com/novara-labs/novara-core)**  
 (text-only, CC0, spec-first).
 
 This repo is **“how it runs”**.  
 `novara-core` is **“what it must obey”**.
-
-Novara is **not** an alternative to LLM vendors.  
-It is the layer that will later audit, price, and sometimes overrule them.
 
 ---
 
@@ -45,9 +46,9 @@ It is the layer that will later audit, price, and sometimes overrule them.
 
 This repository currently focuses on **Novara Evidence Bundle v0.1.0**:
 
-- deterministic, tamper-evident daily bundles for AI behaviour
-- append-only hash-chained logs (AAL: AI Action Ledger)
-- cryptographic anchors for offline verification
+- deterministic, tamper-evident daily bundles for AI behaviour  
+- append-only hash-chained logs (AAL: AI Action Ledger)  
+- cryptographic anchors for offline verification  
 - minimal, readable Python implementation with tests and CI
 
 It is **not** a product, a service, or a full “AI platform”.  
@@ -55,6 +56,20 @@ It is a **toolkit** for building verifiable AI systems and audits.
 
 Target time horizon: **2040–2060 AI / ASI governance**,  
 not just “next quarter” or “this year’s model release”.
+
+---
+
+## Who is this for?
+
+Novara is aimed at people who need **verifiable AI behaviour**, not just better UX:
+
+- **Regulators / auditors** who want portable, tamper-evident logs for AI systems  
+- **Insurers / risk engineers** who must price and pay AI-driven claims  
+- **Engineers / SREs / ML teams** who want a minimal, deterministic audit kit  
+- **Researchers / policy people** exploring evidence-first AI governance
+
+If you just want a “smart personal assistant”, this is probably the wrong repo.  
+If you want **receipts for AI decisions that move money**, you are in the right place.
 
 ---
 
@@ -67,13 +82,12 @@ The core idea is a **1-day, tamper-evident ZIP bundle**:
  ├─ meta.json        # human-readable metadata
  ├─ aal.ndjson       # append-only log with SHA3-256 hash-chain
  └─ anchors.json     # digests / anchors for critical files
-
+```
 Properties:
-	•	Deterministic: same inputs → same bundle, byte-for-byte.
-	•	Tamper-evident: aal.ndjson is a hash-chain; anchors.json pins its digest.
-Any modification breaks the chain or the digest.
-	•	Independently verifiable: verification uses only the bundle itself and public algorithms.
-No secret keys, no vendor cloud, no hidden services required.
+- Deterministic: same inputs → same bundle, byte-for-byte.
+- Tamper-evident: aal.ndjson is a hash-chain; anchors.json pins its digest.
+- Independently verifiable: verification uses only the bundle itself and public algorithms.
+- No secret keys, no vendor cloud, no hidden services required.
 
 The Python library in this repo provides:
 	•	data model for AAL records
@@ -81,6 +95,25 @@ The Python library in this repo provides:
 	•	bundle generation (ZIP)
 	•	bundle verification (including anchors)
 	•	CLI tools on top
+
+⸻
+
+Example use case: insurance payout
+
+One concrete scenario for Novara Evidence Bundles:
+	1.	An AI model proposes a payout amount for an insurance claim.
+	2.	The claims system writes AAL records and builds a daily evidence bundle.
+	3.	A payment rail refuses to move money unless:
+	•	a valid bundle exists,
+	•	the hash-chain is intact, and
+	•	the decision matches the active policy.
+	4.	Auditors (or courts) can later:
+	•	pull the ZIP file,
+	•	verify it offline with a small CLI, and
+	•	replay what the AI and the surrounding system actually did.
+
+Today this is done with a mix of ad-hoc logs, screenshots, and vendor dashboards.
+Novara tries to make “one day, one verifiable bundle” the default instead.
 
 ⸻
 
@@ -208,8 +241,26 @@ Mutability	Often mutable by admins or migrations	Append-only hash-chain + anchor
 Reproducibility	Rarely specified	Deterministic build (same inputs → same ZIP)
 Verification dependency	Needs database + vendor infra	Stand-alone CLI, offline, no secrets
 Anchoring	Usually none	Designed for CTK-2 / multi-anchor extensions
-Interoperability	Per-vendor	Spec + schema intended for multi-language re-impls
+Interoperability	Per-vendor formats	Spec + schema intended for multi-language re-implementations
 
+
+⸻
+
+Standardisation and ecosystem
+
+Novara Evidence Bundle v0.x is intentionally implementation-first:
+	•	A minimal spec and schema that others can re-implement in any language
+	•	A small Python reference library + CLI to show what “correct” looks like
+	•	No dependency on any particular cloud, LLM vendor, or blockchain
+
+Formal standardisation (ISO / IEC / IETF, etc.) is not the starting point.
+If the format proves useful in real pilots (insurers, regulators, auditors),
+we expect the community or a neutral foundation to take it further.
+
+For now, the goal is:
+
+small, boring, well-specified bundles
+that other tools and organisations can reliably build and verify.
 
 ⸻
 
@@ -235,15 +286,15 @@ This is a minimal audit kit, not the full Novara stack.
 
 Development
 
-Run tests
+Run tests:
 
 pytest -v
 
-Run tests with coverage
+Run tests with coverage:
 
 pytest -v --cov=src/novara_evidence --cov-report=term-missing
 
-Editable install
+Editable install:
 
 pip install -e ".[dev]"
 
@@ -302,7 +353,7 @@ Bundles are designed so that:
 
 Contributing
 
-Contributions are welcome.
+Contributions are welcome:
 	•	Check existing issues and discussions
 	•	Keep the code small, explicit, and test-covered
 	•	For new features, please add tests and update the relevant spec(s)
@@ -332,11 +383,6 @@ If you use this work in research or policy discussions, please cite e.g.:
   version = {v0.1.0}
 }
 
-
-⸻
-
-Novara is an experiment in evidence-first AI governance:
-logs before UX, proof before branding, verification before trust.
 
 ⸻
 
@@ -373,4 +419,4 @@ Evidence anchors must be spread across multiple independent infrastructures and 
 (different chains, different operators, different political blocs).
 	10.	Civic Time Horizon
 Novara Core is designed as public infrastructure for 2040–2060,
-not as a feature of any single company, startup, or product
+not as a feature of any single company, startup, or product cycle.
