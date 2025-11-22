@@ -1,14 +1,14 @@
-# Novara
 
-[![Test](https://github.com/Novara-developer/Novara/workflows/Test/badge.svg)](https://github.com/Novara-developer/Novara/actions)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# Novara
 
 Evidence-first AI governance stack — starting with a minimal, verifiable audit kit.
 
+> **Novara is not a personal assistant or SaaS product.  
+> It is an evidence & payment rail for AI-driven decisions.**
+
 Novara is an attempt to answer one simple question:
 
-> When an AI system makes a harmful decision,  
+> When an AI system makes a harmful or costly decision,  
 > who did what, under which policy, and  
 > how can the world verify it **without trusting the vendor**?
 
@@ -34,7 +34,29 @@ This repo is **“how it runs”**.
 
 ---
 
-## Repository scope
+## What Novara is / is not (v0.1)
+
+**Novara _is_:**
+
+- A **minimal audit kit** for AI-driven decisions and payments
+- A concrete proposal for an **Evidence Bundle** format (AAL + anchors)
+- A starting point for **Proof Rail** integrations  
+  （“証拠なき決済禁止”のためのゲート）
+
+**Novara is _not_:**
+
+- Not a chatbot, not a personal assistant
+- Not a monitoring SaaS or cloud service
+- Not “all of your life logs forever”
+
+v0.1 focuses on **AI systems that move money or cause measurable harm**  
+(insurance, credit, subsidies, compensation, etc.).
+
+Human-only workflowsや、日常の全部の行動ログまでは**スコープ外**。
+
+---
+
+## Repository scope (implementation)
 
 This repository currently focuses on **Novara Evidence Bundle v0.1.0**:
 
@@ -42,6 +64,12 @@ This repository currently focuses on **Novara Evidence Bundle v0.1.0**:
 - append-only hash-chained logs (AAL)
 - cryptographic anchors for offline verification
 - minimal, readable Python implementation with tests and CI
+
+In other words:
+
+1. **Formal spec exists** (see `spec/` and JSON Schema)  
+2. **Demo bundle exists** (see `examples/`)  
+3. **Verification CLI exists** (see `scripts/` and `novara-verify-bundle`)
 
 It is **not** a product, a service, or a full “AI platform”.  
 It is a **toolkit** for building verifiable AI systems and audits.
@@ -74,6 +102,67 @@ The Python library in this repo provides:
 	•	bundle generation (ZIP)
 	•	bundle verification (including anchors)
 	•	CLI tools on top
+
+A third party should be able to take a .zip, run the CLI,
+and reach the same “OK / NOT OK” conclusion as the operator.
+
+⸻
+
+How this differs from “just audit logs” (SOC2 / SIEM etc.)
+
+Existing logs / SIEM / audit trails are typically:
+	•	mutable（DBにそのまま保存され、後から書き換え可能）
+	•	ベンダーごとに形式バラバラ
+	•	再現性（same inputs → same artefact）の保証がない
+	•	外部アンカー（ブロックチェーン / TEE / TSA）と切り離されている
+
+Novara Evidence Bundle v0.1 は：
+	•	format fixed（小さな ZIP 構造＋スキーマ付き）
+	•	hash-chained AAL で改ざんを即検出可能
+	•	バンドル単位で deterministic build（CIで強制）
+	•	将来の CTK-2 / multi-anchor 連携を前提とした設計
+
+つまり「ログ」ではなく、**“持ち運べる検証パッケージ（証拠バンドル）”**を標準化しようとしている。
+
+⸻
+
+Protocol boundaries (v0.1)
+
+Scope / in:
+	•	AI systems whose outputs directly trigger or authorise:
+	•	insurance payouts
+	•	loans / credit decisions
+	•	government subsidies / grants
+	•	automated compensation (e.g. incident remedy)
+	•	operator-controlled infrastructure（1サービス〜1企業単位）
+
+Out of scope (for v0.1):
+	•	人間だけの会話ログや、生活のフル監視
+	•	暗号通貨ノードそのものの設計
+	•	既存の全ての SIEM / audit log replacement
+
+Novara は:
+	•	既存のログ基盤・SIEMの 上に乗る“証拠レイヤー” であって、
+	•	それらを破壊するのではなく、“検算可能なサマリ”を出すための最小フォーマットを定義する。
+
+⸻
+
+Ethics & Safeguards (v0.1)
+
+よくある懸念に対して、v0.1の立ち位置を明示しておく：
+	•	Opt-in / scoped logging
+Novara バンドルは「すべての人間の生活ログ」ではなく、
+特定の AI システムの行動と、その結果として動いたお金 / 損害に限定する。
+	•	Local-first / operator-controlled
+v0.1 実装はローカル ZIP と CLI が基本。
+クラウド常時アップロードや、中央集権的な「人間監視OS」は目指していない。
+	•	ZK / privacy-friendly path
+将来バージョンでは、Zero-Knowledge 証明や selective disclosure と組み合わせ、
+「中身全部見せなくても、ルールに従っていることだけ証明する」方向を前提とする。
+	•	Refusal-first governance
+詳細は novara-core の Constitution v0.1 / Incident Protocol v0.1 を参照。
+Novara は「なんでも記録・公開する」のではなく、
+“記録しない権利 / 拒否する権利” をどう制度化するか も同時に扱う。
 
 ⸻
 
@@ -197,15 +286,15 @@ This is a minimal audit kit, not the full Novara stack.
 
 Development
 
-Run tests
+Run tests:
 
 pytest -v
 
-Run tests with coverage
+Run tests with coverage:
 
 pytest -v --cov=src/novara_evidence --cov-report=term-missing
 
-Editable install
+Editable install:
 
 pip install -e ".[dev]"
 
@@ -223,15 +312,15 @@ Status & roadmap
 Current status: v0.1.0 — initial audit kit release.
 This is a working proof-of-concept, not yet recommended for production use.
 
-Completed milestones
+Completed milestones:
 	•	✅ Genesis bundle generated (2025-11-19 05:14 UTC+8)
 	•	✅ Python reference implementation
 	•	✅ Human-readable specs (AAL / bundle)
 	•	✅ JSON Schema for AAL records
 	•	✅ CI with demo verification
 
-Next steps
-	•	Multi-language implementations
+Next steps:
+	•	Multi-language implementations:
 	•	Rust
 	•	Go
 	•	TypeScript / JavaScript
@@ -239,11 +328,25 @@ Next steps
 	•	Integration examples for:
 	•	small AI agents
 	•	simple web apps
+	•	insurance / credit / subsidy workflows
 	•	First real-world incident bundles (“Novara cases”)
 	•	Tooling for insurers / regulators / courts
 
-The long-term goal is for the format and core specs to be governed
-by a neutral Novara Foundation, as described in novara-core.
+⸻
+
+Standardisation path (high-level)
+
+Novara is designed to be standardisable, not just “one repo”:
+	1.	Open spec & reference implementation
+– what you see in this repo (spec/, examples/, tests/).
+	2.	De-facto pilots
+– small insurers, regulators, or audit firms using the bundle format internally.
+	3.	Formal standard track
+– if there is demand, the format and protocols can be taken to
+standards bodies (e.g. ISO / IEC / IETF) after enough evidence & pilots exist.
+
+The current state (v0.1) is “pre-RFC”:
+just enough to be argued with, forked, and pressure-tested.
 
 ⸻
 
@@ -262,8 +365,7 @@ License
 Code in this repository is licensed under the MIT License
 (see the LICENSE file).
 
-The separate novara-core
-textual specifications are published under CC0 1.0 (public domain dedication).
+The separate novara-core textual specifications are published under CC0 1.0 (public domain dedication).
 
 ⸻
 
@@ -284,47 +386,3 @@ If you use this work in research or policy discussions, please cite e.g.:
 
 Novara is an experiment in evidence-first AI governance:
 logs before UX, proof before branding, verification before trust.
-
-## Novara Core – Key Principles (v0.1)
-
-1. **Evidence First**  
-   Logs before UX, proof before branding, verification before trust.
-
-2. **Evidence Sovereignty**  
-   “Ground truth” is whatever can be shown by open, tamper-evident evidence bundles, not by press releases or PR.
-
-3. **Zero-Trust Verification**  
-   Anyone should be able to verify what happened **without trusting the vendor, cloud, or hidden keys**.
-
-4. **Determinism**  
-   Same inputs → same outputs → same evidence bundle, byte-for-byte.  
-   If two runs produce different evidence, that difference itself must be explainable and logged.
-
-5. **Tamper-Evidence**  
-   Any change to logs, policies, models, or configs must be either:
-   - impossible, or
-   - visible as a cryptographic “scar” (hash chain break, anchor mismatch, etc.).
-
-6. **Attribution-Ready**  
-   Every decision can be traced to:
-   - actors (AI / operator / user),
-   - policy version,
-   - model/version,
-   - time window.
-
-7. **SLO-Bound Remedy**  
-   Once harm crosses a public threshold (e.g. ¥10,000),  
-   compensation is driven by pre-funded SLO-Bonds and an open attribution formula,  
-   not by ad-hoc negotiation.
-
-8. **Human-Readable Proof**  
-   Victims and the public receive a plain-language narrative (“what happened / who pays / what changed”),  
-   not just hashes and JSON.
-
-9. **Multi-Anchor Neutrality**  
-   Evidence anchors must be spread across multiple independent infrastructures and jurisdictions  
-   (different chains, different operators, different political blocs).
-
-10. **Civic Time Horizon**  
-    Novara Core is designed as public infrastructure for **2040–2060**,  
-    not as a feature of any single company, startup, or product cycle.
