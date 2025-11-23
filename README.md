@@ -1,5 +1,3 @@
-
-
 # Novara
 
 [![Test](https://github.com/Novara-developer/Novara/workflows/Test/badge.svg)](https://github.com/Novara-developer/Novara/actions)
@@ -434,3 +432,8 @@ This repository is one part of the broader Novara stack.
 - [`novara-evidence-bundle-minimal`](https://github.com/Novara-developer/novara-evidence-bundle-minimal)  
   Minimal implementation of the **Novara Evidence Bundle v0.1** format:  
   spec, JSON Schema, Python SDK, verifier, and example bundles.
+
+## Legacy
+
+The former `novara-evidence-bundle-minimal` repository has been archived,
+and its contents are being consolidated into this repo (together with `novara-protocol-spec`, `novara-evb-sdk-python`, and `novara-incidents`).
