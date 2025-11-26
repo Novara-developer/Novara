@@ -1,190 +1,187 @@
 # Novara
 
-Evidence first な AI ガバナンススタック  
-このリポジトリは「Novara 全体の入口と案内板。
+Evidence first な AI ガバナンススタックの実験場。
+
+このリポジトリは  
+「一日一束の検証可能な証拠パックを残す」ための  
+最小フォーマットとリファレンス実装をまとめたもの。
+
+二零二六年の目的はただ一つ。
+
+二つの問いに  
+動くコードと zip で答えを返せる状態にすること。
+
+一  AI がやらかした時に  
+    誰が いつ 何を どのポリシーの下でやったのか  
+    後から第三者が検算できるか
+
+二  金が動く前に  
+    「証拠パックが通っていない支払い」は  
+    きちんと止まるか
+
+このリポジトリは  
+そのための「最小エビデンスフォーマット」と  
+「ひなた自身の人生ログ実験」を載せる場所として使う。
 
 ---
 
-## 概要
+## 一  何が入っているか
 
-Novara は
+このリポジトリには  
+大きく三つの層がある。
 
-- AI がお金を動かす
-- あとから事故が起きる
-- 裁判所や保険会社が「本当にそうだったのか」を検算したい
+一  フォーマット
 
-という場面のための
+二  実装と検証ツール
 
-- 検証可能な証拠パック
-- 支払い前の検算レール
+三  ロードマップと憲法メモ
 
-をまとめた長期プロジェクト。
+それぞれの入口は次の通り。
 
-ここには
+一  Evidence Bundle 仕様
 
-- 全体像
-- ロードマップ
-- 仕様と他リポジトリへのリンク
+    specs/novara-evidence-bundle-v0.9.md
 
-だけを置く。  
-実際の実装やスキーマは別リポジトリに移す。
+    一日一主体の zip パックの仕様  
+    meta json  
+    aal ndjson  
+    anchors json  
+    の中身と hash chain のルールをここで固定する。
 
----
+二  実装と例
 
-## English summary
+    src/                Python 参考実装  
+    tests/              検証用テスト  
+    examples/           実際に生成された bundle 例  
+    scripts/            generate と verify の薄いラッパ
 
-Novara is a long horizon protocol for verifiable AI behaviour and payments.  
-This repo is the entry point:
+    ひなた自身の一日分ログを  
+    例として残す予定。
 
-- high level overview
-- roadmap
-- links to the actual specs and reference implementations
+三  ロードマップと憲法寄りのメモ
 
-If you want the running code, go directly to the evidence bundle implementation:
+    docs/roadmap-2025-2026-ja.md  
+        大学在学中から二零二六年十月までの  
+        ひなた専用ロードマップ v2
 
-- novara evidence bundle minimal
+    docs/roadmap-2040-checkpoints-ja.md  
+        二零二七 二零三〇 二零三三 二零三五までに  
+        満たしていないと詰む条件のチェックポイント表
 
-The documents here are mostly in Japanese.  
-They exist to keep the original design reasoning legible for the author.
-
----
-
-## このリポジトリの役割
-
-ここは
-
-- Novara 全体のトップページ
-- 他リポジトリへのリンク集
-- 二〇四〇までのざっくりしたチェックポイント
-- 二〇二五から二〇二六の実行計画
-
-だけを管理する。
-
-証拠フォーマットや SDK のコードは  
-novara evidence bundle minimal などに集約していく。
+    docs/constitution/  
+        Novara Core の原則メモ  
+        将来的には novara-core リポジトリ側に寄せていく想定
 
 ---
 
-## 関連リポジトリ
+## 二  今のゴール範囲
 
-実装や詳細仕様は次のリポジトリ側に置く。
+このリポジトリで二零二六年にやることは  
+次の三点に絞る。
 
-- novara evidence bundle minimal  
-  一日一件の tamper evident な証拠 zip とその Python 参照実装
+一  Evidence Bundle v0 9 を  
+    「誰でも再実装できるレベル」で固定する
 
-- novara core  
-  ガバナンス原則と長期ロードマップなどテキスト中心の文書
+    仕様  
+    参照実装  
+    最低限のテスト  
+    サンプル zip
 
-- novara owner spec  
-  所有権や資本構造まわりのメモ  
-  将来は財団設計ドキュメントに整理予定
+二  ひなたの人生 OS として  
+    三十から四十五日分を実際に回す
 
-- novara civilization os v0001  
-  旧来の構想メモ  
-  そのままでは使わないが、発想の出典として残しておく
+    学習  
+    生活  
+    小さな SLO 付き実験  
+    これらを日次 bundle で残す
 
-将来的に構成が変わったら、このセクションを真っ先に更新すること。
+三  二つの外部インターフェイスを作る
 
----
+    一  人間向けの A 四一枚  
+        Novara Evidence Bundle の説明と  
+        サンプル zip
 
-## ディレクトリ構成
+    二  機械向けの auditor pack v 一  
+        検証スクリプト  
+        サンプル bundle  
+        仕様抜粋
 
-このリポジトリの中身はシンプルに保つ。
-
-例
-
-Novara
-- README.md               このファイル
-- docs
-  - roadmap 2025 2026 ja.md     二〇二五から二〇二六の実行計画
-  - checkpoints 2040 ja.md      二〇二七 二〇三〇 二〇三三 二〇三五の詰み条件
-- specs
-  - INDEX.md               仕様ファイルと他リポジトリへのリンク集
-
-コードやスキーマはここに増やさない。  
-増えそうになったら別リポジトリに切り出してリンクする。
+ここまではこのリポジトリだけで完結させる。  
+保険や政府や BigTech への展開は  
+ロードマップ文書の側で管理する。
 
 ---
 
-## 二〇二五から二〇二六でやることの要約
+## 三  使い方の最短ルート
 
-詳細は docs 内のロードマップを見る前提で、要点だけを書く。
+開発環境の前提は Python 三一一 以上。
 
-二〇二五末まで
+一  取得
 
-- Novara evidence bundle minimal を一本にまとめる  
-- 一日分の証拠 zip を手ででも生成できる状態にする  
-- 過去の失敗と設計変更を failures と iterations として整理する  
-- 英語の one pager を一枚用意する
+    git clone https://github.com/Novara-developer/Novara.git
+    cd Novara
 
-二〇二六年前半
+二  セットアップ
 
-- ひなた自身の生活を Novara で三十から四十五日ログする  
-- 観測者を一人入れて、第三者コメント付きの evidence を一回作る  
-- 学内ミニ覇権として五から九人の小さな SLO 付き実験を三本行う  
-- Novara evidence format v0.9 と auditor pack v1.0 を固める
+    python -m venv .venv
+    source .venv/bin/activate
+    pip install -e ".[dev]"
 
-二〇二六年十月
+三  デモ bundle の生成
 
-- スピーチコンテストで  
-  evidence format と auditor pack と実ログ実績をまとめて公開する  
-- 同日に GitHub と簡易 LP を更新し  
-  「真面目な AI は evidence pack を添付しろ」と宣言する
+    python scripts/generate_demo_bundle.py
 
----
+四  検証
 
-## 二〇四〇に向けたチェックポイント
+    python scripts/verify_bundle.py path/to/example.zip
 
-詳細版は docs/checkpoints で管理するが、ルートにも骨だけ置いておく。
-
-- 二〇二七  
-  自分と周辺だけでも evidence bundle を日常的に回していること  
-  最低一件の実験 PoC に第三者が関わっていること
-
-- 二〇三〇  
-  小さい判例の種と保険 PoC のどちらかが動き始めていること  
-  Novara 互換の evidence を使った論文かレポートが外部に一つ以上あること
-
-- 二〇三三  
-  海外の大学か研究機関のどこかで  
-  Novara が名前付きで紹介されていること
-
-- 二〇三五  
-  どこか一つの都市か組織で  
-  「Novara 互換の証拠が無いと支払いできない」ルールが部分的に走っていること
-
-このどれかに届かなかったら、設計か戦略を全部見直すトリガとする。
+詳細な引数や出力形式は  
+後で src と scripts 側の docstring に寄せ  
+README では増やさない。
 
 ---
 
-## 読み始める順番
+## 四  リポジトリ構成案 v0 9
 
-このリポジトリを初めて開いた人向けの導線。
+リポジトリの狙いが一目で分かるよう  
+トップレベルだけを示す。
 
-一  
-README をここまでざっと読む
+Novara  
+├── README.md                      このファイル  
+├── pyproject.toml                 パッケージ設定  
+├── specs/                         形式仕様  
+│   └── novara-evidence-bundle-v0.9.md
+├── src/                           Python 参考実装  
+│   └── novara_evidence/  
+├── tests/                         単体テスト  
+├── examples/                      サンプル bundle  
+├── scripts/                       generate と verify  
+├── docs/  
+│   ├── roadmap-2025-2026-ja.md  
+│   ├── roadmap-2040-checkpoints-ja.md  
+│   └── constitution/              原則メモ  
+└── .github/                       CI 設定など
 
-二  
-docs/roadmap で  
-二〇二五から二〇二六に何をする予定なのかを確認する
-
-三  
-実装に興味があるなら  
-novara evidence bundle minimal リポジトリに飛ぶ
-
-それ以上の深堀りは各リポジトリ側の README と spec に委ねる。
+この構成に合わないファイルやディレクトリは  
+削るか novara-core 側へ移す候補とみなす。
 
 ---
 
-## 連絡とフィードバック
+## 五  英語話者向けの要約
 
-二〇二五年時点では
+短い英語だけ残しておく。
 
-- ひなた個人による実験段階
-- issue も日本語と英語どちらでも可
+Novara is a long horizon experiment in evidence first AI governance.
 
-ただし
+This repository focuses on a minimal daily evidence bundle format  
+and a small Python reference implementation.
 
-- 一般的な AI 話ではなく  
-  evidence bundle や検算の話に集中してほしい  
-- 大きな提案は別途 design ドキュメントとしてまとめてから議論する
+For details see
+
+1  specs/novara-evidence-bundle-v0.9.md  
+2  docs/roadmap-2025-2026-ja.md  
+3  docs/roadmap-2040-checkpoints-ja.md
+
+If you cannot read Japanese  
+treat this repo as a reference implementation  
+and wait for a future English first core spec in novara-core.
