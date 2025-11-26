@@ -1,7 +1,7 @@
 # Novara
 
 Evidence first な AI ガバナンススタック  
-このリポジトリは「Novara 全体の入口と案内板」。
+このリポジトリは「Novara 全体の入口と案内板。
 
 ---
 
